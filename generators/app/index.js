@@ -50,6 +50,8 @@ module.exports = class extends Generator {
     this._writingWebpackConfig();
     this._writingPackageJSON();
     this._writingGit();
+    this._writingJS();
+    this._writingStyles();
   }
 
   _writingWebpackConfig() {
@@ -80,7 +82,32 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
   }
 
+  _writingJS() {
+    const templatePath = this.includeReact
+      ? 'index-react.js'
+      : this.includeBabel ? 'index-es6.js' : 'index-es5.js';
+
+    this.fs.copyTpl(
+      this.templatePath(templatePath),
+      this.destinationPath('src/scripts/index.js'),
+      {
+        includeSass: this.includeSass
+      }
+    );
+  }
+
+  _writingStyles() {
+    const extension = this.includeSass ? 'scss' : 'css';
+
+    this.fs.copy(
+      this.templatePath(`main.${extension}`),
+      this.destinationPath(`src/styles/main.${extension}`)
+    );
+  }
+
   install() {
-    this.installDependencies();
+    this.installDependencies({
+      bower: false
+    });
   }
 };

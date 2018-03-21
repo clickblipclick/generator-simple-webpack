@@ -4,15 +4,14 @@
     "node": ">=4"
   },
   "scripts": {
-    "start": ""
+    "start": "webpack-dev-server"
   },
   "dependencies": {<% if (includeReact) { %>
     "react": "^16.2.0",
     "react-dom": "^16.2.0"<% } %>
   },
   "devDependencies": {
-    "autoprefixer": "^8.1.0",
-    "webpack": "^4.2.0",<% if (includeBabel) { %>
+    "autoprefixer": "^8.1.0",<% if (includeBabel) { %>
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
@@ -25,6 +24,7 @@
     "sass-loader": "^6.0.7",<% } %>
     "style-loader": "^0.20.3",
     "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.12",
     "webpack-dev-server": "^3.1.1"
   },<% if (includeBabel) { %>
   "babel": {
