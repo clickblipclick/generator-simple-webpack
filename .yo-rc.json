@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Ben Nyberg",
+      "authorEmail": "ben@heyben.com",
+      "authorUrl": "https://heyben.com"
+    }
+  }
+}
