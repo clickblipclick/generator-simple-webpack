@@ -25,6 +25,11 @@ module.exports = class extends Generator {
             name: 'SASS',
             value: 'includeSass',
             checked: false
+          },
+          {
+            name: 'Prettier',
+            value: 'includePrettier',
+            checked: true
           }
         ]
       },
@@ -42,6 +47,7 @@ module.exports = class extends Generator {
 
       this.includeReact = hasFeature('includeReact');
       this.includeSass = hasFeature('includeSass');
+      this.includePrettier = hasFeature('includePrettier');
       this.includeBabel = hasFeature('includeReact') || answers.babel;
     });
   }
@@ -52,6 +58,8 @@ module.exports = class extends Generator {
     this._writingGit();
     this._writingJS();
     this._writingStyles();
+    this._writingHTML();
+    this._writingExtras();
   }
 
   _writingWebpackConfig() {
@@ -73,7 +81,8 @@ module.exports = class extends Generator {
       {
         includeSass: this.includeSass,
         includeReact: this.includeReact,
-        includeBabel: this.includeBabel
+        includeBabel: this.includeBabel,
+        includePrettier: this.includePrettier
       }
     );
   }
@@ -102,6 +111,23 @@ module.exports = class extends Generator {
     this.fs.copy(
       this.templatePath(`main.${extension}`),
       this.destinationPath(`src/styles/main.${extension}`)
+    );
+  }
+
+  _writingHTML() {
+    this.fs.copyTpl(
+      this.templatePath('index.html'),
+      this.destinationPath('src/index.html'),
+      {
+        includeReact: this.includeReact
+      }
+    );
+  }
+
+  _writingExtras() {
+    this.fs.copy(
+      this.templatePath('postcss.config.js'),
+      this.destinationPath('postcss.config.js')
     );
   }
 

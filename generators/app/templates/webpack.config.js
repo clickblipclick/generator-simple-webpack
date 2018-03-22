@@ -1,5 +1,5 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/scripts/index.js',
@@ -7,11 +7,14 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'scripts/bundle.[hash].js'
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin({
+    template: 'src/index.html'
+  })],
   module: {
     rules: [
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] }<% if (includeSass) { %>,
-      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'scss-loader'] }<% } %>
+      { test: /\.js$/, use: [<% if (includeBabel) { %>"babel-loader", <% } %>"eslint-loader"], exclude: /node_modules/ },
+      { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] }<% if (includeSass) { %>,
+      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'] }<% } %>
     ]
   }
 };
