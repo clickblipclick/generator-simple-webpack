@@ -104,16 +104,18 @@ module.exports = class extends Generator {
       }
     );
 
-    this.fs.copyTpl(
-      this.templatePath('app-react.js'),
-      this.destinationPath('src/scripts/App.js'),
-      {
-        includeSass: this.includeSass,
-        includeReact: this.includeReact,
-        includeBabel: this.includeBabel,
-        includePrettier: this.includePrettier
-      }
-    );
+    if (this.includeReact) {
+      this.fs.copyTpl(
+        this.templatePath('app-react.js'),
+        this.destinationPath('src/scripts/App.js'),
+        {
+          includeSass: this.includeSass,
+          includeReact: this.includeReact,
+          includeBabel: this.includeBabel,
+          includePrettier: this.includePrettier
+        }
+      );
+    }
   }
 
   _writingStyles() {
