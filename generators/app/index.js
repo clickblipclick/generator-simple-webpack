@@ -103,6 +103,17 @@ module.exports = class extends Generator {
         includeSass: this.includeSass
       }
     );
+
+    this.fs.copyTpl(
+      this.templatePath('app-react.js'),
+      this.destinationPath('src/scripts/App.js'),
+      {
+        includeSass: this.includeSass,
+        includeReact: this.includeReact,
+        includeBabel: this.includeBabel,
+        includePrettier: this.includePrettier
+      }
+    );
   }
 
   _writingStyles() {
@@ -119,7 +130,10 @@ module.exports = class extends Generator {
       this.templatePath('index.html'),
       this.destinationPath('src/index.html'),
       {
-        includeReact: this.includeReact
+        includeSass: this.includeSass,
+        includeReact: this.includeReact,
+        includeBabel: this.includeBabel,
+        includePrettier: this.includePrettier
       }
     );
   }

@@ -10,6 +10,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .container {
@@ -20,7 +21,42 @@ html {
   justify-content: center;
 }
 
+a {
+  color: blue;
+}
+
+a:hover {
+  color: red;
+}
+
 .intro {
   background: #eee;
   width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.intro h1 {
+  margin-top: 0;
+}
+
+.intro p {
+  margin: 0;
+}
+
+.intro ul {
+  list-style: none;
+  padding-left: 1em;
+}
+
+.intro li:before {
+  content: "\2714";
+  color: #2fda22;
+  margin-right: .5em;
+}
+
+.intro code {
+  background-color: #ccc;
+  padding: .25em;
+  border-radius: 3px;
 }
