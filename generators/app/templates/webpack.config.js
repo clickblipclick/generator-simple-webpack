@@ -1,11 +1,14 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const merge = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const devConfig = require("./cfg/webpack.config.dev");
+const buildConfig = require("./cfg/webpack.config.build");
 
-module.exports = {
-  entry: './src/scripts/index.js',
+const commonConfig = {
+  entry: "./src/scripts/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'scripts/bundle.[hash].js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "scripts/bundle.[hash].js"
   },
   plugins: [new HtmlWebpackPlugin({
     template: 'src/index.html'
@@ -13,8 +16,10 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, use: [<% if (includeBabel) { %>"babel-loader", <% } %>"eslint-loader"], exclude: /node_modules/ },
-      { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] }<% if (includeSass) { %>,
-      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'] }<% } %>
+      { test: /\.css$/, use: ["style-loader", "css-loader", "postcss-loader"] }<% if (includeSass) { %>,
+      { test: /\.scss$/, use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"] }<% } %>
     ]
   }
 };
+
+module.exports = merge(commonConfig, (process.env.NODE_ENV === "production") ? buildConfig : devConfig);

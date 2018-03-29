@@ -38,6 +38,35 @@ module.exports = class extends Generator {
         name: 'babel',
         message: 'Do you want to use Babel?',
         when: answers => answers.features.indexOf('includeReact') === -1
+      },
+      {
+        type: 'confirm',
+        name: 'autoPretty',
+        message: 'Do you want to auto-run Prettier in a pre-commit hook?',
+        when: answers => answers.features.indexOf('includePrettier')
+      },
+      {
+        type: 'confirm',
+        name: 'gitInit',
+        message: 'Should we initialize a Git respository for you?'
+      },
+      {
+        type: 'input',
+        name: 'portNumber',
+        message: 'What port should the dev server run on?',
+        default: function() {
+          return '4444';
+        },
+        validate: input => {
+          if (Number.isNaN(input)) {
+            return false;
+          }
+          var parsedNum = Number.parseFloat(input);
+          if (Number.isInteger(parsedNum) && parsedNum < 100000) {
+            return true;
+          }
+          return false;
+        }
       }
     ];
 
@@ -45,6 +74,9 @@ module.exports = class extends Generator {
       const features = answers.features;
       const hasFeature = feat => features && features.indexOf(feat) !== -1;
 
+      this.portNumber = answers.portNumber;
+      this.gitInit = answers.gitInit;
+      this.autoPretty = answers.autoPretty;
       this.includeReact = hasFeature('includeReact');
       this.includeSass = hasFeature('includeSass');
       this.includePrettier = hasFeature('includePrettier');
@@ -72,6 +104,8 @@ module.exports = class extends Generator {
         includeBabel: this.includeBabel
       }
     );
+
+    this.fs.copy(this.templatePath('cfg'), this.destinationPath('cfg'));
   }
 
   _writingPackageJSON() {
@@ -82,7 +116,9 @@ module.exports = class extends Generator {
         includeSass: this.includeSass,
         includeReact: this.includeReact,
         includeBabel: this.includeBabel,
-        includePrettier: this.includePrettier
+        includePrettier: this.includePrettier,
+        autoPretty: this.autoPretty,
+        portNumber: this.portNumber
       }
     );
   }
@@ -148,6 +184,9 @@ module.exports = class extends Generator {
   }
 
   install() {
+    if (this.gitInit) {
+      this.spawnCommand('git', ['init']);
+    }
     this.installDependencies({
       bower: false
     });
