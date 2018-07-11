@@ -45,13 +45,18 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
+    "linters": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ],
+      "*.json": [
+        "prettier --write",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "generators/app/templates/**"
     ]
   },
   "eslintConfig": {
