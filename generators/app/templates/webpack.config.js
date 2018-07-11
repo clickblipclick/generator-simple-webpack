@@ -18,7 +18,7 @@ const commonConfig = {
     rules: [
       { test: /\.js$/, use: [<% if (includeBabel) { %>"babel-loader", <% } %>"eslint-loader"], exclude: /node_modules/ },
       { test: /\.css$/, use: ["style-loader", "css-loader", "postcss-loader"] }<% if (includeSass) { %>,
-      { test: /\.scss$/, use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"] }<% }, %>
+      { test: /\.scss$/, use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"] },<% } %>
       {
         test: /\.(png|jpg|gif|svg)$/,
         use: [

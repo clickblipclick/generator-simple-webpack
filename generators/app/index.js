@@ -105,7 +105,14 @@ module.exports = class extends Generator {
       }
     );
 
-    this.fs.copy(this.templatePath('cfg'), this.destinationPath('cfg'));
+    this.fs.copy(
+      this.templatePath('webpack.config.dev.js'),
+      this.destinationPath('webpack.config.dev.js')
+    );
+    this.fs.copy(
+      this.templatePath('webpack.config.build.js'),
+      this.destinationPath('webpack.config.build.js')
+    );
   }
 
   _writingPackageJSON() {
@@ -130,7 +137,9 @@ module.exports = class extends Generator {
   _writingJS() {
     const templatePath = this.includeReact
       ? 'index-react.js'
-      : this.includeBabel ? 'index-es6.js' : 'index-es5.js';
+      : this.includeBabel
+        ? 'index-es6.js'
+        : 'index-es5.js';
 
     this.fs.copyTpl(
       this.templatePath(templatePath),
