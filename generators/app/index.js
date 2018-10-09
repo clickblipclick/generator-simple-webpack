@@ -41,14 +41,16 @@ module.exports = class extends Generator {
       },
       {
         type: 'confirm',
-        name: 'autoPretty',
-        message: 'Do you want to auto-run Prettier in a pre-commit hook?',
-        when: answers => answers.features.indexOf('includePrettier')
+        name: 'gitInit',
+        message: 'Should we initialize a Git respository for you?',
+        deafult: false
       },
       {
         type: 'confirm',
-        name: 'gitInit',
-        message: 'Should we initialize a Git respository for you?'
+        name: 'autoPretty',
+        message: 'Do you want to auto-run Prettier in a pre-commit hook?',
+        when: answers =>
+          answers.features.indexOf('includePrettier') !== -1 && answers.gitInit
       },
       {
         type: 'input',

@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 <% if (includeSass) { %>import "../styles/main.scss";<% } else { %>import "../styles/main.css";<% } %>
 
 import React from "react";
