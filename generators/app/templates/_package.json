@@ -10,20 +10,20 @@
     "precommit": "pretty-quick --staged"<% } %>
   },
   "dependencies": {<% if (includeBabel) { %>
-    "babel-polyfill": "^6.26.0"<% } %><% if (includeReact && includeBabel) { %>,<% } %><% if (includeReact) { %>
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-hot-loader": "^4.0.0"<% } %>
+    "@babel/polyfill": "^7.0.0"<% } %><% if (includeReact && includeBabel) { %>,<% } %><% if (includeReact) { %>
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-hot-loader": "^4.3.11"<% } %>
   },
   "devDependencies": {
-    "autoprefixer": "^8.1.0",<% if (includeBabel) { %>
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
+    <% if (includeBabel) { %>"@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    <% if (includeReact) { %>"@babel/preset-react": "^7.0.0",<% } } %>
+    "autoprefixer": "^8.1.0",
+    <% if (includeBabel) { %>"babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",<% } %><% if (includeReact && includeBabel) { %>
-    "babel-preset-react": "^6.24.1",<% } %>
-    "clean-webpack-plugin": "^0.1.19",
+    <% } %>"clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.0",<% if (includePrettier) { %>
     "eslint-config-prettier": "^2.9.0",<% } %>
@@ -32,24 +32,32 @@
     "eslint-plugin-prettier": "^2.6.0",<% } %>
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.7",<% if (autoPretty) { %>
-    "husky": "^0.14.3",<% } %>
-    "postcss-loader": "^2.1.3",<% if (includeSass) { %>
-    "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.7",<% } %><% if (includePrettier) { %>
+    "husky": "^0.14.3",<% } %><% if (includeSass) { %>
+    "node-sass": "^4.7.2",<% } %>
+    "postcss-loader": "^2.1.3",<% if (includePrettier) { %>
     "prettier": "^1.11.1",<% } %><% if (autoPretty) { %>
-    "pretty-quick": "^1.4.1",<% } %>
-    "style-loader": "^0.20.3",
+    "pretty-quick": "^1.4.1",<% } %><% if (includeSass) { %>
+    "sass-loader": "^6.0.7",<% } %>"style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.12",
-    "webpack-merge": "^4.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.9",
+    "webpack-merge": "^4.1.2"
   },<% if (includeBabel) { %>
   "babel": {
-    "presets": [["env", {
-      "useBuiltIns": true
-    }]<% if (includeReact) { %>, "react"<% } %>]<% if (includeReact) { %>,
-    "plugins": ["react-hot-loader/babel", "transform-object-rest-spread"]<% } %>
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry"
+        }
+      ]<% if (includeReact) { %>,
+      "@babel/preset-react"<% } %>
+    ],
+    "plugins": [<% if (includeReact) { %>
+      "react-hot-loader/babel",<% } %>
+      "transform-object-rest-spread"
+    ]
   },<% } %>
   "browserslist": [
     "> 1%",
@@ -77,6 +85,11 @@
     ],
     "rules": {<% if (includePrettier) { %>
       "prettier/prettier": "warn"
-    <% } %>}
+    <% } %>}<% if (includeReact) { %>,
+    "settings": {
+      "react": {
+        "version": "16.5.2"
+      }
+    }<% } %>
   }
 }
