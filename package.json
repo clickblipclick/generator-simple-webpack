@@ -1,6 +1,6 @@
 {
   "name": "generator-simple-webpack",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Simple Webpack configuration with optional Babel and SASS support",
   "homepage": "",
   "author": {
